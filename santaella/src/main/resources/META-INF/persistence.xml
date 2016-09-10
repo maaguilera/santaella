@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+	http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+
+	<persistence-unit name="maacsportPU" transaction-type="RESOURCE_LOCAL">
+
+		<!--  mapping-file>model/Mappings.xml</mapping-file>
+		<mapping-file>model/Queries.xml</mapping-file-->
+
+		<!--  properties><property name="hibernate.physical_naming_strategy" ￼￼value="com.maacsport.shared.MyNamingStrategy" /></properties-->
+		<properties>
+		
+		<property name="hibernate.id.new_generator_mappings" value="false" />
+		
+		</properties>
+
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	">
+	
+	
+	  <bean id="logicManager" class="com.maacsport.service.LogicManagerImpl">
+         <property name="reservations">
+            <list>
+                <ref bean="reservation1"/>
+                <ref bean="reservation2"/>
+                <ref bean="reservation3"/>
+            </list>
+         </property>
+       </bean>
+
+       <bean id="reservation1" class="com.maacsport.model.Reservation">
+         <property name="reservationId" value="666"/>
+         <property name="reservationPrice" value="5.76"/>
+       </bean>
+        
+        <bean id="reservation2" class="com.maacsport.model.Reservation">
+         <property name="reservationId" value="667"/>
+         <property name="reservationPrice" value="5.77"/>
+       </bean>
+       
+        <bean id="reservation3" class="com.maacsport.model.Reservation">
+         <property name="reservationId" value="668"/>
+         <property name="reservationPrice" value="5.78"/>
+       </bean>
+
+       <!-- bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+         <property name="basename" value="messages"/>
+       </bean-->
+	
+	
+	
+
+	<!-- Enable annotation driven controllers, validation etc... -->
+	<mvc:annotation-driven />
+
+
+	
+	<context:component-scan base-package="com.maacsport.controllers, com.maacsport.dao,com.maacsport.model, com.maacsport.service" />
+	
+	
+	<!-- Handles HTTP GET requests for /web-resources/** by efficiently serving
+              up static resources in the ${webappRoot}/resources/ directory -->
+    <mvc:resources mapping="/web-resources/**" location="/resources/" />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+		<property name="prefix"><value>/WEB-INF/views/</value></property>
+		<property name="suffix"><value>.jsp</value></property>
+	</bean>
+	
+	
+	
+	<bean    class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+ 
+    <property name="exceptionMappings">
+        <props>
+    
+            <prop key="java.lang.ArithmeticException">generic_error</prop>
+        </props>
+        
+    </property>
+    <property name="defaultErrorView" value="Error" />
+ 
+</bean>
+
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages" />
+	</bean>
+	
+	<!-- Configure the multipart resolver -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">      
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+	
+
+</beans>
