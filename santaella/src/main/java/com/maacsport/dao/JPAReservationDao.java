@@ -66,7 +66,7 @@ public class JPAReservationDao extends GenericDAOImpl<Reservation, Long> impleme
     	int reservationDay = Integer.parseInt(formatted);
     	
         //return em.createQuery("select p from Reservation p order by p.reservation_id").getResultList();
-        Query q= em.createQuery("select p from Reservation p  where reservationDay= :reservationDay order by p.reservationStart");
+        Query q= em.createQuery("select p from Reservation p  where reservationDay= :reservationDay and reservationStatus=1 order by p.reservationStart");
         q.setParameter("reservationDay", reservationDay);
         
         return q.getResultList();
