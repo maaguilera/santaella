@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+ 
+<tiles-definitions>  
+  
+   <!-- Base Definition -->
+   <definition name="base-definition"
+       template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">  
+       <put-attribute name="title" value="" />  
+       <put-attribute name="menu" value="/WEB-INF/views/tiles/template/defaultMenu.jsp" />  
+       <put-attribute name="header" value="/WEB-INF/views/tiles/template/defaultHeader.jsp" />  
+       
+       <put-attribute name="body" value="" />  
+       <put-attribute name="footer" value="/WEB-INF/views/tiles/template/defaultFooter.jsp" />  
+   </definition>  
+  
+   <!-- Home Page -->
+   <definition name="myHome" extends="base-definition">  
+       <put-attribute name="title" value="Welcome" />  
+       <put-attribute name="body" value="/WEB-INF/views/myHome.jsp" />  
+   </definition>  
+   
+   <!-- Login -->
+   <definition name="login" extends="base-definition">  
+       <put-attribute name="title" value="Login" />  
+       <put-attribute name="body" value="/WEB-INF/views/login.jsp" />  
+   </definition>  
+   
+   <!-- sucess Login -->
+   <definition name="success-login" extends="base-definition">  
+       <put-attribute name="title" value="SucessLogin" />  
+       <put-attribute name="body" value="/WEB-INF/views/success-login.jsp" />  
+   </definition> 
+        
+   
+     <!-- add Person Page -->
+   <definition name="addPerson" extends="base-definition">  
+       <put-attribute name="title" value="Add Utilizador" />  
+       <put-attribute name="body" value="/WEB-INF/views/person/addPerson.jsp" />  
+   </definition>  
+   
+     <!-- success Person Page -->
+   <definition name="successPerson" extends="base-definition">  
+       <put-attribute name="title" value="Success Utilizador" />  
+       <put-attribute name="body" value="/WEB-INF/views/person/successPerson.jsp" />  
+   </definition>  
+
+   <!-- List Persons Page -->
+   <definition name="listPersons" extends="base-definition">  
+       <put-attribute name="title" value="Listas Utilizadores" />  
+       <put-attribute name="body" value="/WEB-INF/views/person/listPersons.jsp" />  
+   </definition>  
+   
+  
+   <!-- List Reservations Page -->
+   <definition name="reservationByDay" extends="base-definition">  
+       <put-attribute name="title" value="Reservation By Day" />  
+       <put-attribute name="body" value="/WEB-INF/views/reservation/reservationByDay.jsp" />  
+   </definition> 
+   
+       <!-- Form Persons Page -->
+   <definition name="personForm" template="/WEB-INF/views/person/personForm.jsp">  
+       <put-attribute name="title" value="Person Form" />    
+   </definition>  
+   
+    <!-- Save reservation success Page -->
+   <definition name="reservationSucess" extends="base-definition">  
+       <put-attribute name="title" value="Reservations Sucess" />  
+       <put-attribute name="body" value="/WEB-INF/views/reservation/reservationSucess.jsp" />  
+   </definition> 
+   
+   <!-- Save reservation success Page -->
+   <definition name="success" extends="base-definition">  
+       <put-attribute name="title" value="Success" />  
+       <put-attribute name="body" value="/WEB-INF/views/success.jsp" />  
+   </definition> 
+   
+        <!-- Form Persons Page -->
+   <definition name="personEditForm" template="/WEB-INF/views/person/personEditForm.jsp">  
+       <put-attribute name="title" value="Person Edit Form" />    
+   </definition>  
+   
+   
+    <!-- Error Page -->
+   <definition name="Error" extends="base-definition">  
+       <put-attribute name="title" value="Error" />  
+       <put-attribute name="body" value="/WEB-INF/views/Error.jsp" />  
+   </definition>   
+  
+</tiles-definitions>

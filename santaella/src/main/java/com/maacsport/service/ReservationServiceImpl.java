@@ -1,7 +1,9 @@
 package com.maacsport.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import com.maacsport.dao.ReservationDao;
 import com.maacsport.model.Person;
 import com.maacsport.model.Reservation;
 import com.maacsport.util.Util;
+import com.maacsport.util.UtilDate;
 
 @Service("reservationService")
 
@@ -55,14 +58,34 @@ public class ReservationServiceImpl implements ReservationService {
     		  */
     		  if (!temp.isReservated() && temp.getReservationId()>0) {
     			  temp.setReservationStatus(0);
+    			  try {	
+     				 Calendar fecha= Calendar.getInstance();
+     				
+     				 fecha.setTime(Util.getDateWithFormat(temp.getReservationDay()+temp.getDay()));
+     				 temp.setReservationStart(fecha); 
+     			  } catch (Exception e) {
+     				  
+     			  }
     			  elementDao.save(temp);
     		  }
     		  else if (temp.isReservated() && temp.getReservationId()<=0) {
     			  temp.setReservationStatus(1);
     			 
     			  temp.setPerson(personDao.findById(username));
+    			 
     			  Calendar fecha=Calendar.getInstance();
-    			  fecha.set(2016, (short)9, (short)5, (short)9, 30);;
+    			
+    			String gg= temp.getReservationDay()+temp.getDay();
+    			try {	
+    				 fecha.setTime(Util.getDateWithFormat(gg));
+    				  
+    			  } catch (Exception e) {
+    				  
+    			  }
+    			 
+    			  
+    			  
+    			 // fecha.set(2016, (short)9, (short)5, (short)9, 30);;
     			  temp.setReservationStart(fecha);
     			  elementDao.persist(temp);
     		  }
@@ -90,11 +113,11 @@ public class ReservationServiceImpl implements ReservationService {
     	   List<Reservation> reservas = elementDao.reservationByDay(fromDate);
     	   
     	   for (Reservation t : reservas){
-				int hh= t.getReservationStart().get(Calendar.HOUR);
-				int mm= t.getReservationStart().get(Calendar.MINUTE);
-				String hora = ""+hh+mm; // TODO: pad falta
+				String hh= Util.getPadL(t.getReservationStart().get(Calendar.HOUR),2);
+				String mm= Util.getPadL(t.getReservationStart().get(Calendar.MINUTE),2);
+				String hora =hh+mm;
 				
-				t.setDay(Util.getPadL(hora,4));
+				t.setDay(hora);
 				t.setReservated(true);
 				
 				if (hasElement(horas,hora )) ht.put(Util.getPadL(hora,4), t);

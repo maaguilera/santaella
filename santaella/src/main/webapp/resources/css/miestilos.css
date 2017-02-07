@@ -1,10 +1,19 @@
 * {
 	padding:0;
-	margin:0;
+	margin:0 auto;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+
+.nav2 {
+	background:#ff0000;
+	style:800px;
+	max-width: 800px;
+	margin:0 auto;
+	
+}
+ 
  
 body {background:#FEFEFE;}
  
@@ -15,7 +24,8 @@ body {background:#FEFEFE;}
 header {
 	width: 100%;
 }
- 
+
+
 header nav {
 	background:#023859;
 	z-index:1000;

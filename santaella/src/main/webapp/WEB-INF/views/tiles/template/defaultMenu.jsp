@@ -1,39 +1,7 @@
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<head>
-	<meta charset="UTF-8">
-	<title>Menu</title>
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-<link rel="stylesheet"	href='<c:url value="/web-resources/lib/bootstrap-3.3.6/css/bootstrap.min.css"/>'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.min.css" />
-
-<link rel="stylesheet"	href='<c:url value="/web-resources/lib/jquery/jquery-ui-1.10.4.custom.css"/>'>
-
-	<link rel="stylesheet"	href='<c:url value="/web-resources/css/fonts/style.css"/>'>
-	<link rel="stylesheet"	href='<c:url value="/web-resources/css/miestilos.css"/>'>
-
-<style type="text/css">
-th {
-	text-align: left
-}
-.derecha   { float: right; }
-.izquierda { float: left;  }
-
-.error {
-        color: red; font-weight: bold;
-    }
-
-</style>
-	
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	
-	  <script type="text/javascript"  src='<c:url value="/web-resources/js/main.js"/>'></script>     
-</head>
-
-
-
-	<header>
+	<header id="pepe">
 		<div class="menu_bar">
 			<a href="#" class="bt-menu"><span class="icon-list2"></span>Menú <security:authentication property="principal.username"/></a>
 		</div>
@@ -55,6 +23,7 @@ th {
 				<li class="submenu">
 					<a href="#"><span class="icon-rocket"></span>Admin<span class="caret icon-arrow-down6"></span></a>
 					<ul class="children">
+					     <li><a href='<c:url value="/person/addPerson"/>'>Add Utilizador<span class="icon-dot"></span></a></li>
 						<li><a href='<c:url value="/person/listPersons"/>'>Listas Utilizadores <span class="icon-dot"></span></a></li>
 						<li><a href="#">Reservas <span class="icon-house"></span></a></li>
 						<li><a href="#">Reservas Utilizador <span class="icon-dot"></span></a></li>

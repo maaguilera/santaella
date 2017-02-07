@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.maacsport.form.ReservationForm;
 import com.maacsport.model.Person;
@@ -69,7 +70,7 @@ public class ReservationController {
     }
     
     @RequestMapping(value="/reservationByDay" , method=RequestMethod.GET)
-    public String reservationByDay(HttpServletRequest request,@RequestParam(value="day", required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Calendar fromDate, Map<String, Object> map) {
+    public ModelAndView reservationByDay(HttpServletRequest request,@RequestParam(value="day", required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Calendar fromDate, Map<String, Object> map) {
     	 
         if (fromDate==null) {
         	fromDate=Calendar.getInstance();
@@ -80,24 +81,34 @@ public class ReservationController {
         tt.setReservations(myService.reservationByDay(fromDate));
         tt.setReservationsOri(tt.getReservations());
         
-        map.put("reservationForm", tt);
+        //map.put("reservationForm", tt);
 
   
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted1 = format1.format(fromDate.getTime());
-        map.put("day", formatted1);
+        //map.put("day", formatted1);
         
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         String formatted = format.format(fromDate.getTime());
-        map.put("day1", formatted);
+        //map.put("day1", formatted);
         
-        map.put("recinto", 1);
+        //map.put("recinto", 1);
         
         HttpSession session= request.getSession();
         session.setAttribute("reservationOri", tt.getReservationsOri());
-        map.put("reservation", new Reservation());
+        //map.put("reservation", new Reservation());
         
-        return "/reservation/reservationByDay";
+        ModelAndView model = new ModelAndView("reservationByDay");
+        
+        model.addObject("reservationForm", tt);
+        model.addObject("day", formatted1);
+        model.addObject("day1", formatted);
+        model.addObject("recinto", 1);
+        model.addObject("reservation", new Reservation());
+        
+        return model;
+        
+       // return "/reservation/reservationByDay";
     }
     
     @RequestMapping(value = { "/", "/reservationFilter2" })
@@ -146,7 +157,7 @@ public class ReservationController {
     
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/saveReservations", method = RequestMethod.POST)
-    public String saveReservations(HttpServletRequest request,@ModelAttribute("reservationForm") ReservationForm element, BindingResult result) {
+    public ModelAndView saveReservations(HttpServletRequest request,@ModelAttribute("reservationForm") ReservationForm element, BindingResult result) {
 
     	
     	element.setReservationsOri((List<Reservation> )request.getSession().getAttribute("reservationOri"));
@@ -156,7 +167,12 @@ public class ReservationController {
          * Note that there is no slash "/" right after "redirect:"
          * So, it redirects to the path relative to the current path
          */
-        return "redirect:/reservation/reservationSucess";
+        
+        ModelAndView model = new ModelAndView("reservationSucess");
+        
+        
+        return model;
+        //return "redirect:/reservation/reservationSucess";
  }
  
     

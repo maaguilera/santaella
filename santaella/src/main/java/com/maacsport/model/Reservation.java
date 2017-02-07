@@ -27,6 +27,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import static javax.persistence.CascadeType.MERGE;
 
@@ -46,6 +47,7 @@ public class Reservation implements Serializable {
 	private long reservationId;
 	
 	@Column(name = "reservation_start")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Calendar reservationStart;
 	
 	@Column(name = "reservation_end")

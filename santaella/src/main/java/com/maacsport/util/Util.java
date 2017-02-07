@@ -1,6 +1,8 @@
 package com.maacsport.util;
 
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Util {
 	
@@ -71,6 +73,21 @@ public class Util {
 		while (result.length()<tamano)	result = t+result;
 		
 		return result;
+	}
+	public static Date getDateWithFormat(String fecha)  throws Exception{
+		return getDateWithFormat(fecha ,"yyyyMMddHHmm");
+	}
+	public static Date getDateWithFormat(String fecha ,String format)  throws Exception{
+		 
+		 SimpleDateFormat df = new SimpleDateFormat(format);
+		 
+		  try {
+			 Date date= df.parse(fecha);
+			 String fecha1 = UtilDate.DateTimeFormat(date);
+			 return date; 
+		  } catch (Exception e) {
+			  throw e;
+		  }
 	}
 }
 

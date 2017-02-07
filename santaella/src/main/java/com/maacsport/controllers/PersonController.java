@@ -53,9 +53,28 @@ public class PersonController {
 	public PersonController() {
 		logger = LoggerFactory.getLogger(getClass());
 	}
+	
+	@RequestMapping(value = { "/", "/addPerson" })
+    public ModelAndView addPerson(Map<String, Object> map) {
+
+           map.put("person", new Person());
+
+           
+           List<String> maleList = new ArrayList<String>();
+           maleList.add("Masculino");
+           maleList.add("Femenino");
+           
+           
+           ModelAndView model = new ModelAndView("addPerson");
+          
+           model.addObject("maleList", maleList);
+           return model;
+           
+           //return "/person/listPersons";
+    }
 
     @RequestMapping(value = { "/", "/listPersons" })
-    public String listBooks(Map<String, Object> map) {
+    public ModelAndView listBooks(Map<String, Object> map) {
 
            map.put("person", new Person());
 
@@ -66,13 +85,18 @@ public class PersonController {
            maleList.add("Femenino");
            
        	
-           map.put("maleList", maleList);
-
-           return "/person/listPersons";
+           //map.put("maleList", maleList);
+           
+           ModelAndView model = new ModelAndView("listPersons");
+          
+           model.addObject("maleList", maleList);
+           return model;
+           
+           //return "/person/listPersons";
     }
 
-    @RequestMapping("/get/{elementId}")
-    public String getElement(@PathVariable String elementId, Map<String, Object> map) {
+    @RequestMapping(value="/getPerson/{elementId}", method = RequestMethod.GET)
+    public ModelAndView getElement(@PathVariable String elementId, Map<String, Object> map) {
 
            Person element = myService.getElement(elementId);
 
@@ -83,18 +107,19 @@ public class PersonController {
            maleList.add("Femenino");
            
        	
-           map.put("maleList", maleList);
+           ModelAndView model = new ModelAndView("personEditForm");
            
-           return "/person/personEditForm";
+           model.addObject("maleList", maleList);
+           return model;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView saveBook(@Valid @ModelAttribute("person")Person element, BindingResult result) {
-    	 logger.debug("Acción saveBook"); 
+    	 logger.info("Acción saveBook"); 
     	 ModelAndView mav = new ModelAndView(); 
     	
     	 if (result!=null && result.hasErrors()) {  
-             
+             /*
              List<String> temp=new ArrayList<String>();
              for (Object object : result.getFieldErrors()) {
 				    if(object instanceof FieldError) {
@@ -104,16 +129,28 @@ public class PersonController {
 				        temp.add((fieldError.getCode() + " - " + fieldError.getDefaultMessage()));
 				    }
 
-				   /* if(object instanceof ObjectError) {
-				        ObjectError objectError = (ObjectError) object;
-
-				        logger.info((objectError.getCode()));
-				        temp.add((objectError.getCode() + " _ " + objectError.getDefaultMessage()));
-				    }*/
+				   
 				}
-             mav.addObject("errors", temp);
+    	 */
+            //mav.addObject("errors", temp);
              
-             mav.setViewName("/error");  
+            
+             
+             List<String> maleList = new ArrayList<String>();
+             maleList.add("Masculino");
+             maleList.add("Femenino");
+             
+         	
+             //mav.addObject("person", new Person());
+
+             mav.addObject("getList", myService.getList());
+            
+             mav.addObject("maleList", maleList);
+             
+             mav.addObject("showForm", 1);
+             
+             mav.setViewName("listPersons"); // este funcionaba carga correctamente el modal
+             //mav.setViewName("addPerson"); 
              return mav;  
         } 
     	 
@@ -125,7 +162,7 @@ public class PersonController {
            mav.addObject("result", temp);
            mav.addObject("nome","Listado de utilizadores");
            mav.addObject("link","/person/listPersons");
-           mav.setViewName("/success");  
+           mav.setViewName("success");  
            /*
             * Note that there is no slash "/" right after "redirect:"
             * So, it redirects to the path relative to the current path
