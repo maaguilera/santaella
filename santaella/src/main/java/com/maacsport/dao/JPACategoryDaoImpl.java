@@ -29,7 +29,7 @@ import com.maacsport.model.Person;
  *
  */
 @Repository(value = "CategoryDao")
-public class JPACategoryDaoImpl  extends GenericDAOImpl<Category, Long> implements CategoryDao {
+public class JPACategoryDaoImpl  extends GenericDAOImpl<Category, Long> implements CategoryDao{
 
     protected JPACategoryDaoImpl() {
 		super(Category.class);

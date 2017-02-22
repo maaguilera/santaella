@@ -7,7 +7,9 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -90,4 +92,6 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
                 : LockModeType.OPTIMISTIC
         );
     }
+
+
 }

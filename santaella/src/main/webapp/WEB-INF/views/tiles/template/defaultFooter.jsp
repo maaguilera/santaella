@@ -97,17 +97,21 @@
 </div><!--/footer--></div>
 
 
-<script type="text/javascript"
-		src='<c:url value="/web-resources/lib/jquery/jquery-1.10.2.js"/>'></script>
-	<script type="text/javascript"
-		src='<c:url value="/web-resources/lib/jquery/jquery-ui-1.10.4.custom.js"/>'></script>
-	<script type="text/javascript"
-		src='<c:url value="/web-resources/lib/jquery/jquery.ui.datepicker.js"/>'></script>
-	<script type="text/javascript"
-		src='<c:url value="/web-resources/lib/bootstrap-3.3.6/js/bootstrap.min.js"/>'></script>
+<script type="text/javascript"		src='<c:url value="/web-resources/lib/jquery/jquery-1.10.2.js"/>'></script>
+<script type="text/javascript"		src='<c:url value="/web-resources/lib/jquery/jquery-ui-1.10.4.custom.js"/>'></script>
+
+		
+<script type="text/javascript"		src='<c:url value="/web-resources/lib/jquery/jquery.ui.datepicker.js"/>'></script>
+<script type="text/javascript"		src='<c:url value="/web-resources/lib/bootstrap-3.3.6/js/bootstrap.min.js"/>'></script>
+<script src="//oss.maxcdn.com/bootbox/4.2.0/bootbox.min.js"></script>
+
+
+
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+
+
 	
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 		<script>
 		$(document).ready(function() {
 			

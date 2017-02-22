@@ -1,6 +1,7 @@
 package com.maacsport.service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,16 @@ public class PersonServiceImpl implements PersonService {
       @Transactional( readOnly = true)
       public List<Person> getList() {
              return elementDao.getList();
+      }
+      
+      @Transactional( readOnly = true)
+      public List<Person> getList(String name,String dni,Calendar dateMe,Calendar dateMa) {
+             return elementDao.getList(name,dni,dateMe,dateMa);
+      }
+      
+      @Transactional( readOnly = true)
+      public List<Person> getList(String name,String dni,Date dateMe,Date dateMa) {
+             return elementDao.getList(name,dni,dateMe,dateMa);
       }
 
       @Transactional( readOnly = true)

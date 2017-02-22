@@ -4,16 +4,21 @@
 package com.maacsport.dao;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -23,6 +28,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.maacsport.model.Person;
+
+import antlr.StringUtils;
 
 
 /**
@@ -104,6 +111,131 @@ public class JPAPersonDaoImpl  extends GenericDAOImpl<Person, String> implements
         return em.createQuery(criteria).getResultList();
     }
 
+    @Override
+    public List<Person> getList(String name,String dni,Calendar dateMe,Calendar dateMa) {
+    	
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        java.util.Date startDate = dateMe.getTime();
+        java.util.Date endDate = dateMa.getTime();
+
+        
+    	
+    	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder(); //1
+        CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class); //1
+        
+        Root<Person> root = criteriaQuery.from(em.getMetamodel().entity(Person.class)); //criteriaQuery.from(Person.class); //2
+
+        
+        criteriaQuery.select(root); //Paso 3
+        List<Predicate> predicates = new ArrayList();
+        
+        //Name
+        if (name!=null && name.trim().length()>0) {
+        	Predicate preName = criteriaBuilder.equal(root.get("person_name"),name); //Paso 4
+        	predicates.add(preName);
+        }
+        
+        //DNI
+        if (dni!=null && dni.trim().length()>0) {
+        	Predicate preDni = criteriaBuilder.equal(root.get("person_dni"),dni); //Paso 4
+        	predicates.add(preDni);
+        }
+        
+        //DateMe
+        ParameterExpression<Calendar> parameter1 = criteriaBuilder.parameter(Calendar.class);
+        
+        Predicate preDateBorn1= criteriaBuilder.greaterThanOrEqualTo(root.get("person_bornDate").as(Calendar.class),parameter1); //Paso 4
+        
+        //DateMa
+        ParameterExpression<Calendar> parameter2 = criteriaBuilder.parameter(Calendar.class);
+        
+        Predicate preDateBorn2= criteriaBuilder.lessThanOrEqualTo(root.get("person_bornDate").as(Calendar.class),parameter2); //Paso 4
+        
+        // AND ...
+       
+        Predicate[] pre = predicates.toArray(new Predicate[predicates.size()]);
+        Predicate preAnd = criteriaBuilder.and(pre); //Paso 4
+        		
+        criteriaQuery.where(preAnd); //Paso 5
+        
+        
+        Query qry = em.createQuery(criteriaQuery);
+        qry.setParameter(parameter1, dateMe, TemporalType.DATE);//Paso 6
+        qry.setParameter(parameter2, dateMa, TemporalType.DATE);//Paso 6
+        
+        List<Person> results = qry.getResultList(); //Paso 6
+        
+        return results;
+        
+    }
+
+    
+ public List<Person> getList(String name,String dni,Date dateMe,Date dateMa) {
+    
+        
+    	
+    	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder(); //1
+        CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class); //1
+        
+        Root<Person> root = criteriaQuery.from(em.getMetamodel().entity(Person.class)); //criteriaQuery.from(Person.class); //2
+
+        
+        criteriaQuery.select(root); //Paso 3
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        
+       
+        
+        //Name
+        if (name!=null && name.trim().length()>0) {
+        	Predicate preName = criteriaBuilder.equal(root.get("name"),name); //Paso 4
+        	predicates.add(preName);
+        }
+        
+        //DNI
+        if (dni!=null && dni.trim().length()>0) {
+        	Predicate preDni = criteriaBuilder.equal(root.get("person_dni"),dni); //Paso 4
+        	predicates.add(preDni);
+        }
+        
+        //DateMe
+        ParameterExpression<Date> parameter1=null;
+        if (dateMe!=null) {
+        	parameter1 = criteriaBuilder.parameter(Date.class);
+        
+        	Predicate preDateBorn1= criteriaBuilder.greaterThanOrEqualTo(root.get("bornDate").as(Date.class),parameter1); //Paso 4
+        	predicates.add(preDateBorn1);
+        	
+ 		}
+        //DateMa
+        ParameterExpression<Date> parameter2=null;
+        if (dateMa!=null) {
+	         parameter2= criteriaBuilder.parameter(Date.class);
+	        
+	        Predicate preDateBorn2= criteriaBuilder.lessThanOrEqualTo(root.get("bornDate").as(Date.class),parameter2); //Paso 4
+	        predicates.add(preDateBorn2);
+	        
+        }
+        // AND ...
+       
+        if (predicates.size()>0) {
+	        
+        	Predicate[] pre = predicates.toArray(new Predicate[predicates.size()]);
+	        Predicate preAnd = criteriaBuilder.and(pre); //Paso 4
+	        		
+	        criteriaQuery.where(preAnd); //Paso 5
+        }
+        
+        
+        Query qry = em.createQuery(criteriaQuery);
+        
+        if (parameter1!=null) qry.setParameter(parameter1, dateMe, TemporalType.DATE);//Paso 6
+        if (parameter2!=null) qry.setParameter(parameter2, dateMa, TemporalType.DATE);//Paso 6
+        
+        List<Person> results = qry.getResultList(); //Paso 6
+        
+        return results;
+        
+    }
 
 
 public Person getUser(String dni) {

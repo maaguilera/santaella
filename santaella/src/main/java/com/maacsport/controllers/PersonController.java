@@ -3,7 +3,10 @@ package com.maacsport.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -28,12 +31,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.maacsport.dao.PersonDao;
 import com.maacsport.exceptions.CustomException;
 import com.maacsport.model.Person;
+import com.maacsport.model.Reservation;
 import com.maacsport.service.PersonService;
 
 @Controller("personController")
@@ -94,7 +102,104 @@ public class PersonController {
            
            //return "/person/listPersons";
     }
-
+    
+    @RequestMapping(value={"/listPersonsPag","/listPersonsPag/{typee}"},  method=RequestMethod.GET)
+    public ModelAndView listPersonsPag(@PathVariable Map<String, String> pathVariablesMap, 
+    								   @RequestParam(value="name", defaultValue="") String name, 
+    								   @RequestParam(value="dni", defaultValue="") String dni, 
+    								   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="dateMe", required=false) Date dateMe, 
+    								   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="dateMa", required=false) Date dateMa,  
+    								  // @DateTimeFormat(pattern="yyyy-MM-dd") @RequestParam(value="dateMe", required=false) Calendar dateMe,
+    								  // @DateTimeFormat(pattern="yyyy-MM-dd") @RequestParam(value="dateMa", required=false) Calendar dateMa,
+    								   Map<String, Object> map, 
+    								   HttpServletRequest req) {
+    	 
+    	 PagedListHolder<Person> productList = null;
+    	 map.put("person", new Person());
+    	 String typee = pathVariablesMap.get("typee");
+    	 
+    	 if(null == typee) {
+             // First Request, Return first set of list
+             List<Person> phonesList = myService.getList(name,dni,dateMe,dateMa);
+             
+             productList = new PagedListHolder<Person>();
+             productList.setSource(phonesList);
+             productList.setPageSize(10);
+             
+             req.getSession().setAttribute("phonesList",  productList);
+         
+             printPageDetails(productList);
+             
+         } else if("next".equals(typee)) {
+             // Return next set of list
+             productList = (PagedListHolder<Person>) req.getSession()
+                                 .getAttribute("phonesList");
+             
+             productList.nextPage();
+             
+             printPageDetails(productList);
+             
+         } else if("prev".equals(typee)) {
+             // Return previous set of list
+             productList = (PagedListHolder<Person>) req.getSession()
+                                 .getAttribute("phonesList");
+             
+             productList.previousPage();
+             
+             printPageDetails(productList);
+             
+         } else {
+             // Return specific index set of list
+             System.out.println("type:" + typee);
+             
+             productList = (PagedListHolder<Person>) req.getSession()
+                                 .getAttribute("phonesList");
+             
+             int pageNum = Integer.parseInt(typee);
+             
+             productList.setPage(pageNum);
+             
+             printPageDetails(productList);
+         }
+                     
+    	 List<String> maleList = new ArrayList<String>();
+         maleList.add("Masculino");
+         maleList.add("Femenino");
+         
+     	
+         //map.put("maleList", maleList);
+         
+         ModelAndView model = new ModelAndView("listPersonsPag");
+         
+         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       
+         
+         if (dateMe != null) model.addObject("dateMe", format.format(dateMe.getTime()));
+         if (dateMa != null) model.addObject("dateMa", format.format(dateMa.getTime()));
+         model.addObject("name",name);
+         model.addObject("dni",dni);
+         
+        
+         model.addObject("maleList", maleList);
+         
+         return  model;
+    }
+    
+    private void printPageDetails(PagedListHolder productList) {
+        
+        System.out.println("curent page - productList.getPage() :"
+                + productList.getPage());
+        
+        System.out.println("Total Num of pages - productList.getPageCount :"
+                + productList.getPageCount());
+        
+        System.out.println("is First page - productList.isFirstPage :"
+                + productList.isFirstPage());
+        
+        System.out.println("is Last page - productList.isLastPage :"
+                + productList.isLastPage());
+    }
+    
     @RequestMapping(value="/getPerson/{elementId}", method = RequestMethod.GET)
     public ModelAndView getElement(@PathVariable String elementId, Map<String, Object> map) {
 
@@ -149,19 +254,20 @@ public class PersonController {
              
              mav.addObject("showForm", 1);
              
-             mav.setViewName("listPersons"); // este funcionaba carga correctamente el modal
+             mav.setViewName("listPersonsPag"); // este funcionaba carga correctamente el modal
              //mav.setViewName("addPerson"); 
              return mav;  
         } 
     	 
            //myDao.save(element);
+    	 element.setStatus(true);
            myService.save(element);
            List<String> temp=new ArrayList<String>();
            temp.add("Dni: "+element.getDni());
            temp.add("Nombre: " + element.getName());
            mav.addObject("result", temp);
            mav.addObject("nome","Listado de utilizadores");
-           mav.addObject("link","/person/listPersons");
+           mav.addObject("link","/person/listPersonsPag");
            mav.setViewName("success");  
            /*
             * Note that there is no slash "/" right after "redirect:"
@@ -180,7 +286,7 @@ public class PersonController {
             * Note that there is no slash "/" right after "redirect:"
             * So, it redirects to the path relative to the current path
             */
-           return "redirect:/person/listPersons";
+           return "redirect:/person/listPersonsPag";
     }
     
     @RequestMapping("/delete/{elementId}")
@@ -197,7 +303,7 @@ public class PersonController {
             * Note that there is the slash "/" right after "redirect:"
             * So, it redirects to the path relative to the project root path
             */
-           return "redirect:/person/listPersons";
+           return "redirect:/person/listPersonsPag";
     }
     
     @RequestMapping(value="/excep/{id}", method=RequestMethod.GET)

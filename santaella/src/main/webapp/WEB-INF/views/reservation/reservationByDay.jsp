@@ -28,14 +28,14 @@
 							<legend class="text-center">Seleccione un dia para
 								mostrar reservas</legend>
 							<div class='input-group date' id='datetimepicker1'>
-								<input type='text' name="day" id='day1' class="form-control"
-									value="<c:out value="${day}" />" /> <span
+								<input type='text' name="day" id='day1' class="form-control" value="<c:out value="${day}" />" /> 
+								<span
 									class="input-group-addon"> <span
 									class="glyphicon glyphicon-calendar"></span>
 
-								</span> <span class="input-group-addon">
-									<button type="button" class="btn btn-info btn-sm" id='button1'
-										value="click;">Mostrar Reservas</button>
+								</span> 
+								<span class="input-group-addon">
+									<button type="button" class="btn btn-info btn-sm" id='button1' value="click;">Mostrar Reservas</button>
 								</span>
 							</div>
 						</fieldset>

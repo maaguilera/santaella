@@ -7,9 +7,9 @@
 
 
 <body>
-<div class=row> 
-        <img src='<c:url value="/web-resources/img/escudo.png"/>' width="200" height="300" alt="Ayuntamiento de Santaella" align>
-      
+	<div div class="nav2">
+        <img src='<c:url value="/web-resources/img/escudo.png"/>' width="200" height="300" alt="Ayuntamiento de Santaella" align="middle" />
+   </div>   
 </body>
 
 

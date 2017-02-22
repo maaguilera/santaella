@@ -107,4 +107,27 @@
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
 		p:definitions="/WEB-INF/views/**/tiles.xml" />
+
+<!-- 
+	<mvc:annotation-driven conversion-service="conversionService" />
+	
+	<bean id="conversionService"
+		class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.maacsport.model.advanced.VTypeConverter" />
+			</list>
+		</property>
+	</bean>
+	-->
+	
+	<!--  
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+      <property name="customEditors">
+       <map>
+         <entry key="com.maacsport.model.VType" value="com.maacsport.model.advanced.VTypeEditor"/>
+       </map>
+      </property>
+    </bean>
+    -->
 </beans>

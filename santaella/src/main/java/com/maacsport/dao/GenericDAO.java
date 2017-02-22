@@ -2,6 +2,7 @@ package com.maacsport.dao;
 
 import javax.persistence.LockModeType;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public interface GenericDAO<T, ID extends Serializable> {
     List<T> findAll();
     
     List<T> getList();
-
+   
     Long getCount();
 
     T save(T entity);//makePersistent

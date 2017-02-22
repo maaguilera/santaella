@@ -25,10 +25,22 @@
 					<ul class="children">
 					     <li><a href='<c:url value="/person/addPerson"/>'>Add Utilizador<span class="icon-dot"></span></a></li>
 						<li><a href='<c:url value="/person/listPersons"/>'>Listas Utilizadores <span class="icon-dot"></span></a></li>
+						<li><a href='<c:url value="/person/listPersonsPag"/>'>Listas Utilizadores Pag<span class="icon-dot"></span></a></li>
 						<li><a href="#">Reservas <span class="icon-house"></span></a></li>
 						<li><a href="#">Reservas Utilizador <span class="icon-dot"></span></a></li>
 						<li><a href="${pageContext.request.contextPath}/admin/first.html">First <span class="icon-house"></span></a></li>
 						<li><a href="${pageContext.request.contextPath}/admin/second.html">Second<span class="icon-dot"></span></a></li>
+					</ul>
+				</li>
+				<li class="submenu">
+					<a href="#"><span class="icon-rocket"></span>Admin Veronica<span class="caret icon-arrow-down6"></span></a>
+					<ul class="children">
+					     <li><a href='<c:url value="/veronica/person/addPerson"/>'>Add Utilizador<span class="icon-dot"></span></a></li>
+						
+						<li><a href='<c:url value="/veronica/person/listPersonsPag"/>'>Listas Utilizadores Pag<span class="icon-dot"></span></a></li>
+						<li><a href='<c:url value="/veronica/quota/listQuotas"/>'>Listas Historico Quotas <span class="icon-dot"></span></a></li>
+						<li><a href='<c:url value="/veronica/vista/listView1"/>'>Generar Quotas<span class="icon-dot"></span></a></li>
+						
 					</ul>
 				</li>
 				<li><a href="#"><span class="icon-earth"></span>Mapa</a></li>
