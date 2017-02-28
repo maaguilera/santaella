@@ -7,8 +7,11 @@
 
 
 <body>
-	<div div class="nav2">
-        <img src='<c:url value="/web-resources/img/escudo.png"/>' width="200" height="300" alt="Ayuntamiento de Santaella" align="middle" />
+	<div  class="nav2">
+	   <div></div>
+	   <div> <img src='<c:url value="/web-resources/img/veronica2.jpg"/>' width="200" height="300" alt="Verónica" align="middle" /></div>
+	   <div></div>
+       
    </div>   
 </body>
 

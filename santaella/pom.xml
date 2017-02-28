@@ -14,15 +14,32 @@
 		<hibernate.jpa21.api.version>1.0.0.Final</hibernate.jpa21.api.version>
 		<apachetiles.version>3.0.5</apachetiles.version>
 	</properties>
-
+	<!-- 
+	<repositories>
+	    <repository>
+	        <id>mavencentral</id>
+	        <name>Maven Central</name>
+	        <url>https://repo1.maven.org/maven2/</url>
+	        <layout>default</layout>
+	    </repository>
+    </repositories>
+-->
 	<dependencies>
 
+<!-- ========== Test ========== -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
 
 		<!-- Spring dependencies -->
 		<dependency>
@@ -30,6 +47,13 @@
 			<artifactId>spring-core</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		
+		  <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -120,7 +144,21 @@
 			<version>5.1.24</version>
 		</dependency>
 
-
+       <!-- ========== Mail ========== --> 
+       
+      
+<!-- JavaMail-->
+<dependency>
+    <groupId>javax.mail</groupId>
+    <artifactId>mail</artifactId>
+    <version>1.5.0-b01</version>
+</dependency>
+   
+		<dependency>
+		    <groupId>javax.activation</groupId>
+		    <artifactId>activation</artifactId>
+		    <version>1.1</version>
+		</dependency>
 
 
 		<!-- dependency> <groupId>org.hibernate.javax.persistence</groupId> <artifactId>hibernate-jpa-2.1-api</artifactId> 

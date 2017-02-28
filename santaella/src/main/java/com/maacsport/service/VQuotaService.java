@@ -12,6 +12,8 @@ public interface VQuotaService {
      * CREATE and UPDATE
      */
     public void save(VQuota element);
+    
+    public boolean  createQuotas(int ano,String path);
 
     /*
      * READ

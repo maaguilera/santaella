@@ -25,8 +25,10 @@ public interface VPersonDao extends GenericDAO<VPerson, String>{
     //List<VPerson> findAll(boolean withBids);
     List<VPerson> getList(String name,String dni,Calendar dateMe,Calendar dateMa);
    List<VPerson> getList(String name,String dni,Date dateMe,Date dateMa);
+   List<VPerson> getHermanosPasanMayores();
     
     public VPerson getUser(String dni) ;
     public void persist2(VPerson p) ;
+    public int updateTipoHermano() ;
     
 }

@@ -23,12 +23,14 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.maacsport.model.VPerson;
 import com.maacsport.model.VQuota;
+import com.maacsport.model.VView1;
 
 import antlr.StringUtils;
 
@@ -71,6 +73,63 @@ public class JPAVQuotaDaoImpl  extends GenericDAOImpl<VQuota, String> implements
     public void persist2(VQuota p) {
         em.persist(p);
     }
+
+    @Override
+    public int insertQuotas1() {
+      	
+      	Session session = (Session) em.getDelegate();  
+  
+      	Transaction tx = session.beginTransaction();
+
+      	String hqlInsert = "insert into v_quota (amount,name,v_person_id,ano,typeName,concept,discount,token,amount_char,description) select amount,name,id,year,typeName,'concept',0,'token','','' from view1;";
+      	int result = session.createQuery( hqlInsert ).executeUpdate();
+      	tx.commit();
+      	session.close();
+  		
+  		session.flush();
+  		session.clear();
+  		
+  		return result;
+  		
+  	}
+    
+    @Override
+    public void insertQuotas2(List<VQuota> elements) {
+      	
+      	Session session = (Session) em.getDelegate();  
+  
+      	Transaction tx = session.beginTransaction();
+
+      
+      	for (VQuota element: elements) {
+      	 
+      	   
+      	    session.save(element);
+      	}
+      	tx.commit();
+      	session.close();
+  
+  	}
+    
+    @Override
+    public void insertQuotas3(List<VQuota> elements) {
+      	
+      	Session session = (Session) em.getDelegate();  
+  
+      	Transaction tx = session.beginTransaction();
+
+      
+      	for (VQuota element: elements) {
+      	    
+      	    session.save(element);
+      	}
+      	tx.commit();
+      	session.close();
+  		
+
+  		
+  	}
+  
 
 
     
@@ -122,6 +181,7 @@ public class JPAVQuotaDaoImpl  extends GenericDAOImpl<VQuota, String> implements
         
     }
 
+	
     
  
 

@@ -21,7 +21,9 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.maacsport.model.VPerson;
 
@@ -67,7 +69,23 @@ public class JPAVPersonDaoImpl  extends GenericDAOImpl<VPerson, String> implemen
     }
 
   
-   
+    @Override
+  	public int updateTipoHermano() {
+      	
+      	Session session = (Session) em.getDelegate();  
+      	
+      	//SELECT * from where bornDate!=null and DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(),bornDate)), ‘%Y’)+0>=18
+      	
+      	org.hibernate.Query q = session.createQuery("update VPerson set v_type_id=1  where v_type_id in (2,3) and borndate is not null and TIMESTAMPDIFF(year,bornDate, now() ) >17");
+  		
+  		int result= q.executeUpdate();
+  		
+  		session.flush();
+  		session.clear();
+  		
+  		return result;
+  		
+  	}
   
     
     @Override
@@ -199,6 +217,19 @@ public class JPAVPersonDaoImpl  extends GenericDAOImpl<VPerson, String> implemen
 
 public VPerson getUser(String dni) {
 	return this.findById(dni);
+}
+
+@Transactional(readOnly = true)
+@SuppressWarnings("unchecked")
+@Override
+public List<VPerson> getHermanosPasanMayores() {
+	 //Query q= em.createQuery("SELECT p from v_person p where v_type_id in (2,3) and bornDate!=null and DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(),bornDate)), ‘%Y’)+0>=18 order by p.surname");
+	 Query q= em.createQuery("SELECT p from VPerson p where v_type_id in (2,3) and bornDate is not null and TIMESTAMPDIFF(year,bornDate, now() ) >17 order by p.surname");
+	    
+     //q.setParameter("reservationDay", reservationDay);
+	 List<VPerson> r=q.getResultList();
+	 
+     return r;
 }
     
     /*public Person getUser(String dni) {

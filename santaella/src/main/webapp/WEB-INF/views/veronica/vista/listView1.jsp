@@ -13,11 +13,11 @@
 	<div class="container">
 
 	
-<div class="row">
+		<div class="row">
 
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">Resumen</h3>
+					<h3 class="panel-title">Resumen-<tiles:insertAttribute name="title" ignore="true" /></h3>
 				</div>
 
 				<div class="panel-body">
@@ -51,7 +51,81 @@
 
 			</div>
 		</div>
+		
+		<div class="row">
 
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+				<c:set var="update18_" value="${update18}" scope="session" />
+					<h3 class="panel-title">Hermanos que pasaron a mayor de 18 años - Total: ${update18_}</h3>
+				</div>
+
+				<div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								
+								<th width="33%">Nombre</th>
+								<th width="33%">Fecha nacimiento</th>
+								<th width="33%">Tipo de Hermano</th>
+								
+								
+							</tr>
+						</thead>
+						<tbody>
+							
+							<c:set var="vPerson18_" value="${vPerson18}" scope="session" />
+							<c:forEach items="${vPerson18_}" var="element1"
+								varStatus="loopCounter">
+								<tr>
+									
+									<td><c:out value="${element1.surname}, ${element1.name}" /></td>
+									<td><c:out value="${element1.bornDate.time}" /></td>
+									<td><c:out value="${element1.vType.name}" /></td>
+								
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+		
+
+		<div class="row">
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Click sobre el botón para generar cuotas</h3>
+				</div>
+
+				<div class="panel-body">
+						<form class="form-horizontal"	action="${pageContext.request.contextPath}/veronica/quota/createQuotas/" name="formularioFiltro" method="get">
+					<fieldset>
+						<legend class="text-center">Generar Quotas para año indicado</legend>
+
+						<div class="form-group">
+							<div class="col-sm-12">
+								
+								
+									<label>Año quota:</label>
+									<input type="text" id="ano" name="ano" size="10" maxlength="4" value="2017"/>
+									<button type="button" class="btn btn-success btn-lg" id='buttonFiltro' value="click;">Generar quotas</button>
+								</div>
+								
+								
+							</div>
+							
+								
+				    
+				
+					</fieldset>
+				</form>
+				</div>
+
+			</div>
+		</div>
 
 		<div class="row">
 
@@ -93,7 +167,8 @@
 						</tbody>
 					</table>
 				</div>
-
+				
+			
 			</div>
 		</div>
 
@@ -138,7 +213,12 @@
 	
 		$(document).ready(function() {
 			
-		
+			var kk = $('#buttonFiltro');
+
+			kk.click(function() {
+				//alert(day.val());
+				document.formularioFiltro.submit()
+			});
 			
 			
 			

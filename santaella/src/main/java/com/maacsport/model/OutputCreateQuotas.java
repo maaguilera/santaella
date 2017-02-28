@@ -32,50 +32,38 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 
 
-public class VView1All implements Serializable {
+public class OutputCreateQuotas implements Serializable {
 
 	
-   
-	 List<VView1Group> vView1Group;
-	
-     List<VView1> phonesList;
-     
- 	 List<VPerson> person18;
- 	
- 	 int update18;
- 	
-     public List<VPerson> getPerson18() {
-		return person18;
+     String typeName;
+    
+     Long numero;
+    
+     double amount;
+    
+
+	public String getTypeName() {
+		return typeName;
 	}
 
-	public void setPerson18(List<VPerson> person18) {
-		this.person18 = person18;
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
-
-
-	public List<VView1Group> getvView1Group() {
-		return vView1Group;
+	public Long getNumero() {
+		return numero;
 	}
 
-	public void setvView1Group(List<VView1Group> vView1Group) {
-		this.vView1Group = vView1Group;
+	public void setNumero(Long numero) {
+		this.numero = numero;
 	}
 
-	public List<VView1> getPhonesList() {
-		return phonesList;
+	public double getAmount() {
+		return amount;
 	}
 
-	public void setPhonesList(List<VView1> phonesList) {
-		this.phonesList = phonesList;
-	}
-
-	public int getUpdate18() {
-		return update18;
-	}
-
-	public void setUpdate18(int update18) {
-		this.update18 = update18;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 	

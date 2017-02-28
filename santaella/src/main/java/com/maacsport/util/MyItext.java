@@ -3,32 +3,39 @@ package com.maacsport.util;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.util.List;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPTableEvent;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.codec.Base64;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
+import com.maacsport.model.VQuota;
 
 public class MyItext {
 	
 	private String documentName="";
+	VQuota elemento;
 	
-	MyItext () {
+	public MyItext () {
 		
 	}
 	
 	
 	void create(String name) throws IOException, DocumentException {
 		
+	}
+		
+    public void create(String name, List<VQuota> list,String realPath) throws IOException, DocumentException {
+		
 		
 		// create document
 		
-		documentName=name;
+		documentName=name+".pdf";
 		
         Document document = new Document(PageSize.A4, 36, 36, 90, 36);
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(documentName));
@@ -44,20 +51,82 @@ public class MyItext {
         // write to document
         document.open();
         Chunk linebreak = new Chunk(new DottedLineSeparator());
-        
-        for (int i=1;i<10;i++) {
+        int contador=0;
+        for(VQuota elem : list) {
+        	elemento=elem;
         	PdfPTable table= this.buildTableRecibo(12);
         	
             document.add(table);
             document.add(new Paragraph("  "));
             document.add(linebreak);
-            if (i==3 ||  i==6 || i==9)document.newPage();
+            if (contador==2) {
+            	document.newPage();
+            	contador=0;
+            }
         } 
         	
         //document.add(new Paragraph("Adding a footer to PDF Document using iText."));
         
         
         document.close();
+	
+	}
+public void createIndividual(String name, List<VQuota> list,String realPath) throws IOException, DocumentException {
+		
+		/*
+		 *  puedes configurar el tamaño de la hoja mediante un objeto tipo Rectangle.
+
+				Rectangle pageSize = new Rectangle(200f, 400f); //ancho y alto
+				Document docu = new Document(pageSize);
+				
+			Para los márgenes tienes más argumentos, 72 puntos es 1 pulgada:
+			
+				Document docu = new Document(PageSize.A4, 36, 72, 108, 108);
+
+		 */
+		// create document
+	
+	    Rectangle myPageSize = new Rectangle(570f, 250f); //ancho y alto
+
+		
+	    for(VQuota elem : list) {
+		 
+				documentName=name+"_"+elem.getId()+"_"+elem.getvPerson().getId()+".pdf";
+				
+		        Document document = new Document(myPageSize, 36, 20, 30, 20);
+		        PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(documentName));
+		
+		        // add header and footer
+		        //HeaderFooterPageEvent event = new HeaderFooterPageEvent();
+		        //writer.setPageEvent(event);
+		
+		     
+		        
+		        // write to document
+		        document.open();
+		        
+		        //watermark
+		        pdfWriter.setPageEvent(new MyItextPDFEventListener(realPath));
+		        
+		     
+		        
+		       // Chunk linebreak = new Chunk(new DottedLineSeparator());
+		        
+		       
+		        	elemento=elem;
+		        	PdfPTable table= this.buildTableRecibo(12);
+		        	
+		            document.add(table);
+		            //document.add(new Paragraph("  "));
+		            //document.add(linebreak);
+		            
+		      
+		        	
+		        //document.add(new Paragraph("Adding a footer to PDF Document using iText."));
+		        
+		        
+		        document.close();
+	    } 
 	
 	}
 	
@@ -84,7 +153,7 @@ public class MyItext {
        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
     	table.addCell(cell);
     	
-    	cell = new PdfPCell(new Paragraph("Recibo Nº: 3"));
+    	cell = new PdfPCell(new Paragraph("Recibo Nº: "+ elemento.getId()));
     	cell.setColspan(3);
     	cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     	cell.setBorderColor(BaseColor.WHITE);
@@ -117,7 +186,7 @@ public class MyItext {
     	cell.setPaddingBottom(10);
      	table.addCell(cell);
      	
-     	Paragraph p= new Paragraph("    Miguel Angel Aguilera Caballero");
+     	Paragraph p= new Paragraph("   "+ elemento.getName());
      	p.add(under);
      	cell = new PdfPCell(p);
      	cell.setColspan(8);
@@ -141,7 +210,7 @@ public class MyItext {
     	cell.setPaddingBottom(10);
      	table.addCell(cell);
      	
-     	p= new Paragraph("    #CUARENTA EUROS#");
+     	p= new Paragraph("    #"+elemento.getAmountChar()+"#");
      	p.add(under);
      	cell = new PdfPCell(p);
      	cell.setColspan(8);
@@ -166,7 +235,7 @@ public class MyItext {
     	cell.setPaddingBottom(20);
      	table.addCell(cell);
      	
-     	p= new Paragraph("    CUOTA ADULTO - Año 2017");
+     	p= new Paragraph("    "+elemento.getConcept());
      	p.add(under);
      	
      	cell = new PdfPCell(new Paragraph(p));
@@ -186,7 +255,7 @@ public class MyItext {
     	
     	// row 6
      	
-     	cell = new PdfPCell(new Paragraph("SON: #40,00# €uros"));
+     	cell = new PdfPCell(new Paragraph("SON: #"+elemento.getAmount()+"# EUROS"));
      	cell.setColspan(4);
      	cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
      	cell.setBorderColor(BaseColor.WHITE);
@@ -216,18 +285,18 @@ public class MyItext {
     	table.addCell(cell);
      	
      	
-    	String textoCod= "esto los vmaos a encode con los campos";
+    	/*String textoCod= "esto los vmaos a encode con los campos";
     	
     	String encodedString = Base64.encodeBytes(textoCod.getBytes());
     	System.out.println("encodedString " + encodedString);
     	byte[] decodedBytes = Base64.decode(encodedString);
-    	System.out.println("decodedString " + new String(decodedBytes));
+    	System.out.println("decodedString " + new String(decodedBytes));*/
     	
     	
     	Font font = new Font();
     	font.setSize(7.0f);
     	
-     	cell = new PdfPCell(new Phrase(encodedString, font));
+     	cell = new PdfPCell(new Phrase(elemento.getToken(), font));
      	cell.setColspan(12);
        	cell.setBorderColor(BaseColor.WHITE);
      	table.addCell(cell);

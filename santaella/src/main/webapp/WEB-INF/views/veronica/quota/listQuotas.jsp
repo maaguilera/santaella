@@ -18,7 +18,7 @@
 			<div class='col-md-12'>
 
 				<form class="form-horizontal"
-					action="${pageContext.request.contextPath}/veronica/person/listPersonsPag/"
+					action="${pageContext.request.contextPath}/veronica/quota/listQuotas/"
 					name="formularioFiltro" method="get">
 					<fieldset>
 						<legend class="text-center">Filtros para realizar
@@ -51,10 +51,11 @@
 						</div>
 
 						<div class="form-group">
-							<div class="col-sm-11"></div>
-							<div class="col-sm-1">
-								<button type="button" class="btn btn-success btn-lg"
+							<div class="col-sm-11"><button type="button" class="btn btn-success btn-lg"
 									id='buttonFiltro' value="click;">Busqueda</button>
+									</div>
+							<div class="col-sm-1">
+								
 							</div>
 						</div>
 					</fieldset>
@@ -135,6 +136,40 @@
 					</c:otherwise>
 				</c:choose>
 			</span>
+		</div>
+		
+		<div class="row">
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Pdfs Quotas</h3>
+				</div>
+
+				<div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th width="4%"></th>
+								<th width="20%">Nombre Pdf</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							
+							
+							<c:forEach items="${pdfs}" var="pdf"
+								varStatus="loopCounter">
+								<tr>
+									<td><c:out value="${loopCounter.count}" /></td>
+									<td><a href="${pageContext.request.contextPath}/web-resources/pdf/<c:out value="${pdf}" />"><c:out value="${pdf}" /></a></td>
+								
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
 		</div>
 
 	</div>

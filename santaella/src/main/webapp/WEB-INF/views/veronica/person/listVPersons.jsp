@@ -70,7 +70,7 @@
 								<th width="12%">Dni</th>
 								<th width="15%">Email</th>
 								<th width="10%">tfo</th>
-
+								<th width="12%">Tipo</th>
 								<th width="12%">BornDate</th>
 								<th width="20%">Description</th>
 								<th width="12%"></th>
@@ -82,11 +82,11 @@
 								varStatus="loopCounter">
 								<tr>
 									<td><c:out value="${loopCounter.count}" /></td>
-									<td><c:out value="${element.name}" /></td>
+									<td><c:out value="${element.surname}, ${element.name}" /></td>
 									<td><c:out value="${element.id}" /></td>
 									<td><c:out value="${element.email}" /></td>
 									<td><c:out value="${element.tfo}" /></td>
-
+									<td>${element.vType.name}</td>
 									<td>${element.bornDate.time}</td>
 									<td><c:out value="${element.description}" /></td>
 

@@ -21,7 +21,7 @@ public class VPersonServiceImpl implements VPersonService {
 
 	  
       public void save(VPerson element) {
-		  element.setId(element.getId());
+		  element.setStatus(true);
 		  element.setCreation(Calendar.getInstance());
     	  elementDao.save(element);
       }

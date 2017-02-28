@@ -6,11 +6,8 @@
 <div class="nav2">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="exampleModalLabel">Nuevo Utilizador</h4>
+				
+				<h4 class="modal-title" id="exampleModalLabel">Añadir Hermano</h4>
 			</div>
 			<div class="modal-body">
 
@@ -20,84 +17,111 @@
 					<form:errors path="*" cssClass="errorblock" element="div"/>
 
 					<fieldset>
-						<legend>Soy leyenda</legend>
+						
 						
 						<div class="form-group">
-							<label for="id">DNI</label>
-							<form:input path="id" placeholder="DNI" maxlength="10" />
-							<form:errors path="id" cssClass="error" />
+							<label class="col-sm-offset-0 col-sm-3 control-label" for="id">DNI</label>
+							<div class="col-sm-9">
+								<form:input path="id" placeholder="DNI" maxlength="10" />
+								<form:errors path="id" cssClass="error" />
+							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="name" class="form-control-label">Name</label>
+							<label class="col-sm-offset-0 col-sm-3 control-label" for="name">Name</label>
+							<div class="col-sm-9">
 							<form:input path="name" placeholder="nombre" />
 							<form:errors path="name" cssClass="error" />
+							</div>
+							
 						</div>
 						<div class="form-group">
-							<label for="surname" class="form-control-label">Apellidos</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="surname">Apellidos</label>
+							<div class="col-sm-9">
 							<form:input path="surname" placeholder="apellidos" />
 							<form:errors path="surname" cssClass="error" />
+							</div>
 						</div>
 						<div class="form-group">
-							<label for="bornDate">Fecha Nacimiento</label>
-						
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="bornDate">Fecha Nacimiento</label>
+						<div class="col-sm-9">
 							<form:input path="bornDate" placeholder="YYYY-MM-DD"
 								class="datepicker" />
 								<form:errors path="bornDate" cssClass="error" />
+								</div>
 						</div>
 						<div class="form-group">
-							<label for="isWoman">Género</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="isWoman">Género</label>
+							<div class="col-sm-9">
 							<form:radiobutton path="isWoman" value="false" />Masculino
 							<form:radiobutton path="isWoman" value="true" />Femenino
+							</div>
 						</div>
 						<div class="form-group">
-							<label for="joinDate" class="form-control-label">Fecha alta Hermano</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="joinDate" >Fecha alta Hermano</label>
+							<div class="col-sm-9">
 							<form:input path="joinDate" placeholder="YYYY-MM-DD" class="datepicker2" />
 							<form:errors path="joinDate" cssClass="error" />
+							</div>
 						</div>
 						<div class="form-group">
-							<label for="tfo">Tfo</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="tfo">Tfo</label>
+							<div class="col-sm-9">
 							<form:input path="tfo" placeholder="111111111"	maxlength="13" />
 							<form:errors path="tfo" cssClass="error" />
+							</div>
 						</div>
 						<div class="form-group">
-							<label for="email">Email</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="email">Email</label>
+							<div class="col-sm-9">
 							<form:input path="email" placeholder="email@email.com"	maxlength="15" />
 							<form:errors path="email" cssClass="error" />
+							</div>
 						</div>
 						<div class="form-group">
-							<label for="city">Ciudad</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="city">Ciudad</label>
+							<div class="col-sm-9">
 							<form:input path="city" placeholder="ciudad" maxlength="20" />
 							<form:errors path="city" cssClass="error" />
+							</div>
 						</div>
 						<div class="form-group">
-							<label for="cp">CP</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="cp">CP</label>
+							<div class="col-sm-9">
 							<form:input path="cp" placeholder="CP" maxlength="8" />
 							<form:errors path="cp" cssClass="error" />
+							</div>
 						</div>
 						<div class="form-group">
-							<label for="address">Dirección</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="address">Dirección</label>
+							<div class="col-sm-9">
 							<form:input path="address" placeholder="dirección" maxlength="45" />
 							<form:errors path="address" cssClass="error" />
+							</div>
 						</div>
 						<div class="form-group">
-							<label for="vType">Tipo hermano</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="vType">Tipo hermano</label>
+							<div class="col-sm-9">
 								<form:select path="vType">
+								 	<form:option value="NONE" label="Select"/>
 					                 <form:options items="${vTypes}" itemLabel="name" itemValue="id" />
 					            </form:select>
+					            </div>
 						</div>
 						<div class="form-group">
-							<label for="description">Description</label>
+							<label  class="col-sm-offset-0 col-sm-3 control-label" for="description">Description</label>
+							<div class="col-sm-9">
 							<form:input path="description" placeholder="" size="80" maxlength="80" />
+							</div>
 						</div>
 						
 						
 					</fieldset>
 					
 					<div class="modal-footer">
-					     <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+					    
 						
-						<button type="submit" id="submit" class="btn btn-primary">Send message</button>
+						<button type="submit" id="submit" class="btn btn-primary">Submitir</button>
 
 			         </div>
 				</form:form>

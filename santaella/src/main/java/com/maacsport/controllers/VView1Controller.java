@@ -46,7 +46,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.maacsport.dao.VTypeDao;
 import com.maacsport.dao.VView1Dao;
 import com.maacsport.exceptions.CustomException;
-
+import com.maacsport.model.VQuota;
 import com.maacsport.model.VType;
 import com.maacsport.model.VView1;
 import com.maacsport.model.VView1All;
@@ -93,10 +93,12 @@ public class VView1Controller {
 			 
 	}
 	
+	 
+	 
 
     
     @RequestMapping(value={"/listView1","/listView1/{typee}"},  method=RequestMethod.GET)
-    public ModelAndView listPersonsPag(@PathVariable Map<String, String> pathVariablesMap, 
+    public ModelAndView listView1(@PathVariable Map<String, String> pathVariablesMap, 
     								 
     								   Map<String, Object> map, 
     								   HttpServletRequest req) {
@@ -116,6 +118,10 @@ public class VView1Controller {
              req.getSession().setAttribute("phonesList",  productList);
              
              req.getSession().setAttribute("vView1Group",  temp.getvView1Group());
+             
+             req.getSession().setAttribute("vPerson18",  temp.getPerson18());
+             
+             req.getSession().setAttribute("update18",  temp.getUpdate18());
          
              printPageDetails(productList);
              

@@ -1,6 +1,7 @@
 package com.maacsport.controllers;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -106,6 +108,34 @@ public class VQuotaController {
 
     }
 
+	@RequestMapping(value={"/createQuotas"},  method=RequestMethod.GET)
+    public ModelAndView createQuotas(@PathVariable Map<String, String> pathVariablesMap, 
+    								   @RequestParam(value="ano", defaultValue="0") int ano, 
+    								   
+    								   Map<String, Object> map, 
+    								   HttpServletRequest req) {
+	 
+		//req.contextPath}/web-resources/pdf
+	
+		String path = req.getSession().getServletContext().getRealPath("resources/pdf");
+		 logger.debug("pathhhhpdf="+path);
+		boolean result  = myService.createQuotas(ano,path);  
+	 
+	     ModelAndView mav = new ModelAndView(); 
+	 
+		 List<String> temp=new ArrayList<String>();
+	     temp.add("Quotas: "+result);
+
+	     mav.addObject("result", temp);
+	     mav.addObject("nome","Listado de Quotas");
+	     mav.addObject("link","/veronica/quota/listQuotas");
+	     mav.setViewName("success");  
+	     /*
+	      * Note that there is no slash "/" right after "redirect:"
+	      * So, it redirects to the path relative to the current path
+	      */
+	     return mav;  
+    }
       
     @RequestMapping(value={"/listQuotas","/listQuotas/{typee}"},  method=RequestMethod.GET)
     public ModelAndView listPersonsPag(@PathVariable Map<String, String> pathVariablesMap, 
@@ -115,9 +145,28 @@ public class VQuotaController {
     								   Map<String, Object> map, 
     								   HttpServletRequest req) {
     	 
-    	 PagedListHolder<VQuota> productList = null;
+    	
+
+ 	   ServletContext context = req.getSession().getServletContext();
+
+ 	   String file = context.getRealPath("resources/pdf");
+ 	   File f = new File(file);
+ 	   String [] fileNames = f.list();
+ 	   File [] fileObjects= f.listFiles();
+ 	  
+ 	   List<String> pdfs=new ArrayList<String>();
+ 	   for (int i = 0; i < fileObjects.length; i++) {
+	    	   if(!fileObjects[i].isDirectory()){
+	    	       pdfs.add(fileNames[i]);//file+fileNames[i];
+	    	   
+	    	    }
+ 	   }
+ 	  map.put("pdfs", pdfs);
+    	
+    	PagedListHolder<VQuota> productList = null;
     	 map.put("vquota", new VQuota());
     	 String typee = pathVariablesMap.get("typee");
+    	 
     	 
     	 if(null == typee) {
              // First Request, Return first set of list

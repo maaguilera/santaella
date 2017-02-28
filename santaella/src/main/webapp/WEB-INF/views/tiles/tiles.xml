@@ -16,7 +16,7 @@
   
    <!-- Home Page -->
    <definition name="myHome" extends="base-definition">  
-       <put-attribute name="title" value="Welcome" />  
+       <put-attribute name="title" value="Inicio > Hemandad de La Verónica" />  
        <put-attribute name="body" value="/WEB-INF/views/myHome.jsp" />  
    </definition>  
    
@@ -86,6 +86,8 @@
        <put-attribute name="title" value="Person Edit Form" />    
    </definition> 
    
+     
+   
 
    
    
@@ -93,25 +95,25 @@
    
    <!-- add Person Page -->
    <definition name="addVPerson" extends="base-definition">  
-       <put-attribute name="title" value="Add Utilizador" />  
+       <put-attribute name="title" value="Administración > Crear Nuevo Hermano" />  
        <put-attribute name="body" value="/WEB-INF/views/veronica/person/addVPerson.jsp" />  
    </definition>  
    
      <!-- success Person Page -->
    <definition name="successVPerson" extends="base-definition">  
-       <put-attribute name="title" value="Success Utilizador" />  
+       <put-attribute name="title" value="Administración > Operacón Realizada con Éxito." />  
        <put-attribute name="body" value="/WEB-INF/views/veronica/person/successVPerson.jsp" />  
    </definition>  
 
    <!-- List Persons Page -->
    <definition name="listVPersons" extends="base-definition">  
-       <put-attribute name="title" value="Listas Utilizadores" />  
+       <put-attribute name="title" value="Admin > Consulta de Hermanos" />  
        <put-attribute name="body" value="/WEB-INF/views/veronica/person/listVPersons.jsp" />  
    </definition>  
    
     <!-- List Persons with Pag Page -->
    <definition name="listVPersonsPag" extends="base-definition">  
-       <put-attribute name="title" value="Listas Pag Utilizadores" />  
+       <put-attribute name="title" value="Administración > Consulta de Hermanos" />  
        <put-attribute name="body" value="/WEB-INF/views/veronica/person/listVPersonsPag.jsp" />  
    </definition>  
    
@@ -119,25 +121,29 @@
    
        <!-- Form Persons Page -->
    <definition name="vpersonForm" template="/WEB-INF/views/veronica/person/vpersonForm.jsp">  
-       <put-attribute name="title" value="Person Form" />    
+       <put-attribute name="title" value="Crear Nuevo Hermano" />    
    </definition>  
    
    
         <!-- Form Persons Page -->
    <definition name="vpersonEditForm" template="/WEB-INF/views/veronica/person/vpersonEditForm.jsp">  
-       <put-attribute name="title" value="Person Edit Form" />    
-   </definition> 
+       <put-attribute name="title" value="Editar Hermano" />    
+   </definition>
+      <!-- Form Persons Page -->
+   <definition name="vpersonEditDinamic" template="/WEB-INF/views/veronica/person/vpersonEditDinamic.jsp">  
+       <put-attribute name="title" value="Editar Hermano" />    
+   </definition>  
    
    
        <!-- List Calculo quitas with Pag Page -->
    <definition name="listView1" extends="base-definition">  
-       <put-attribute name="title" value="Listas Calculo quotas" />  
+       <put-attribute name="title" value="Administración > Generar Cuotas / Resumen" />  
        <put-attribute name="body" value="/WEB-INF/views/veronica/vista/listView1.jsp" />  
    </definition>
    
     <!-- List Historico quotas with Pag Page -->
    <definition name="listQuotas" extends="base-definition">  
-       <put-attribute name="title" value="Listas Calculo quotas" />  
+       <put-attribute name="title" value="Administración > Consulta de Cuotas (Pdfs)" />  
        <put-attribute name="body" value="/WEB-INF/views/veronica/quota/listQuotas.jsp" />  
    </definition>    
    

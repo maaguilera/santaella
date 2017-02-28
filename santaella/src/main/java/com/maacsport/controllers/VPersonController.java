@@ -240,9 +240,12 @@ public class VPersonController {
            List<String> maleList = new ArrayList<String>();
            maleList.add("Masculino");
            maleList.add("Femenino");
+           List<VType> temp = vTypeDao.findAll();
            
+           map.put("vTypes", temp);
        	
-           ModelAndView model = new ModelAndView("vpersonEditForm");
+           //ModelAndView model = new ModelAndView("vpersonEditForm");
+           ModelAndView model = new ModelAndView("vpersonEditDinamic");
            
            model.addObject("maleList", maleList);
            return model;
@@ -297,7 +300,7 @@ public class VPersonController {
            temp.add("Nombre: " + element.getName());
            mav.addObject("result", temp);
            mav.addObject("nome","Listado de utilizadores");
-           mav.addObject("link","/veronica/person/listVPersonsPag");
+           mav.addObject("link","/veronica/person/listPersonsPag");
            mav.setViewName("success");  
            /*
             * Note that there is no slash "/" right after "redirect:"
@@ -316,7 +319,7 @@ public class VPersonController {
             * Note that there is no slash "/" right after "redirect:"
             * So, it redirects to the path relative to the current path
             */
-           return "redirect:/veronica/person/listVPersonsPag";
+           return "redirect:/veronica/person/listVPersons";
     }
     
     @RequestMapping("/delete/{elementId}")

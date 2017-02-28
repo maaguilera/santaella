@@ -164,7 +164,7 @@
 
 
 
-									<td><button type="button" class="btn btn-default editButton" data-id="${element.id}">Editar</button></td>
+									<td><button type="button" class="btn btn-default editButton" data-id="${element.id}" data-toggle="modal" data-target="#exampleModalEdit1">Editar</button></td>
 												<!--   onclick="editPerson('${element.id}');">Editar</button> -->
 
 									<td><a href='<c:url value="/veronica/delete/${element.id}"/>'
@@ -221,31 +221,17 @@
 	<c:url var="editUrl" value="edit" />
 
 	<script>
-
-
-
 		function editPerson2(id) {
-
 			//$.get('<c:url value="/veronica/person/getPerson"/>' + "/" + id, function(result) {
-
 				//$("#exampleModalEdit").html(result);
-
 				$("#exampleModalEdit").modal();
-
-
 			//});
 		}
 		
-
 		
-
 		function resetDialog(form) {
-
 			form.find("input").val("");
 		}
-
-
-
 		$(document).ready(function() {
 			
 			$("#datetimepickerme").datepicker({
@@ -257,10 +243,7 @@
 				$("#dateMe").val(dateText);
 			  	}
 			});
-
 			
-
-
 			$("#datetimepickerma").datepicker({
 				changeMonth: true,
 				changeYear: true,
@@ -270,7 +253,6 @@
 				$("#dateMa").val(dateText);
 				}
 			});
-
 			
 			$("#dateMe").on("change", function () {
 		        var fromdate = $(this).val();
@@ -280,16 +262,14 @@
 		        var fromdate = $(this).val();
 		       // alert(fromdate);
 		    });
-			
-			
-			
+						
 			var day = $('#dateIg');
 			var kk = $('#buttonFiltro');
-
 			kk.click(function() {
 				//alert(day.val());
 				document.formularioFiltro.submit()
 			});
+
 
 
 			 <c:choose>
@@ -300,9 +280,8 @@
 			
 			    </c:otherwise>
 			</c:choose>
-
-
-			 $('#exampleModalEdit').bootstrapValidator({
+			
+			 $('#exampleModalEdit1').bootstrapValidator({
 		            framework: 'bootstrap',
 		            icon: {
 		                valid: 'glyphicon glyphicon-ok',
@@ -348,10 +327,8 @@
 		        .on('success.form.fv', function(e) {
 		            // Save the form data via an Ajax request
 		            e.preventDefault();
-
 		            var $form = $(e.target),
 		                id    = $form.find('[name="id"]').val();
-
 		            // The url and method might be different in your application
 		            $.ajax({
 		                url: '${actionUrlEdit}',
@@ -362,16 +339,13 @@
 		                var $button = $('button[data-id="' + id + '"]'),
 		                    $tr     = $button.closest('tr'),
 		                    $cells  = $tr.find('td');
-
 		                // Update the cell data
 		                $cells
 		                    .eq(1).html(response.name).end()
 		                    .eq(2).html(response.id).end()
 		                    .eq(3).html(response.email).end();
-
 		                // Hide the dialog
 		                $form.parents('.bootbox').modal('hide');
-
 		                // You can inform the user that the data is updated successfully
 		                // by highlighting the row or showing a message box
 		                bootbox.alert('The user profile is updated');
@@ -382,33 +356,49 @@
 			 $('.editButton').on('click', function() {
 			        // Get the record's ID via attribute
 			        var id = $(this).attr('data-id');
-
-			        $("#exampleModalEdit1").on('hidden.bs.modal', '.modal', function () {
-			            $(this).find('.modal-body').empty();
-			        });
+			        
+			        $('#dynamic-content').html(''); // leave this div blank
+			        //$('#exampleModalEdit1').html(''); // leave this div blank
+			        
+			        $('#modal-loader').show();  
+			        
+			        //$("#exampleModalEdit1").on('hidden.bs.modal', '.modal', function () {
+			        //    $(this).find('.modal-body').empty();
+			        //});
 			        
 			        $.ajax({
 			            url: '<c:url value="/veronica/person/getPerson"/>' + "/" + id,
-			            method: 'GET'
-			        }).success(function(response) {
-			        	 $("#exampleModalEdit1").
-			        	 $("#exampleModalEdit1").html(response);
+			            method: 'GET',
+			            dataType: 'html'
+			        }).fail(function(){
+			                $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+			                $('#modal-loader').hide();
+		          		 })
+			           .done(function(response) {
+			        	 $('#dynamic-content').html('');
+			        	 //$('#exampleModalEdit1').html('');
+			        	 //alert(response);
+			        	 //$("#exampleModalEdit1").html(response);
+			        	 $('#dynamic-content').html(response); // load here
+			        	 $('#modal-loader').hide(); // hide loader  
+			        	 
 			            // Populate the form fields with the data returned from server
-			          /*  $('#exampleModalEdit')
+			          /*  $('#exampleModalEdit1')
 			                .find('[name="name""]').val(response.name).end()
 			                .find('[name="surname"]').val(response.surname).end()
 			                .find('[name="email"]').val(response.email).end()
 			                .find('[name="description"]').val(response.description).end();*/
 			             
 			            // Show the dialog
+			            /*
 			            bootbox
 			                .dialog({
 			                    title: 'Edit the user profile',
-			                    message: $('#exampleModalEdit'),
+			                    message: $('#exampleModalEdit1'),
 			                    show: false // We will show it manually later
 			                })
 			                .on('shown.bs.modal', function() {
-			                    $('#exampleModalEdit')
+			                    $('#exampleModalEdit1')
 			                        .show()                             // Show the login form
 			                        .bootstrapValidator('resetForm',true);// Reset form
 			                })
@@ -416,16 +406,18 @@
 			                    // Bootbox will remove the modal (including the body which contains the login form)
 			                    // after hiding the modal
 			                    // Therefor, we need to backup the form
-			                    $('#exampleModalEdit').hide().appendTo('body');
+			                    $('#exampleModalEdit1').hide().appendTo('body');
 			                })
 			                .modal('show');
-			        });
-			    });
+			               */
+			      		                
+			        	});//sucess
+		        	
+			    }); //edit click
 			
 			
 			
 		}); //ready
-
 	
 		
 	</script>

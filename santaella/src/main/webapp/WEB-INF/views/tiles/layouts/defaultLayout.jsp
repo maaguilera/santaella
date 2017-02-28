@@ -69,12 +69,16 @@
 		<tiles:insertAttribute name="menu" />
 	</section>
 	<header id="header">
+	    <div id="header1" class="container">
+          <h3><tiles:insertAttribute name="title" ignore="true" /></h3>
+		</div>
 		<tiles:insertAttribute name="header" />
 	</header>
 
 	
 
 	<section id="site-content">
+		
 		<tiles:insertAttribute name="body" />
 	</section>
 
